@@ -19,7 +19,7 @@ class planet:
         #Stellar Mass in Msol
 
         self.sl=SL
-        #Stellar Luminance in Lsol
+        #Stellar Luminosity in Lsol
 
         self.p=math.sqrt(pow(self.a,3)/self.sm)
         #Orbital Period in Year
@@ -47,15 +47,22 @@ class planet:
             #Score against PL=1.0
             self.hs=10-(20*(Lp-1))
             if(self.a<0.5):
+                self.hs-=1.0
                 self.hs*=0.5
             #Penalty for close-orbit planets due to Tidal Lock
-            if(self.hs>-10):
+                
+            if(self.sl>1 and self.hs>1):
+                #self.hs-=1.0
+                self.hs/=(math.log(self.sl))
+
+            #Penalty for higher mass stars due to UV output
+                
+            if(self.hs>1):
                 self.h=True
         #Habitability Score: 10 is perfect Lower is worse
             #print(self.pt[1],round(self.pl,3))
         
     def planet_type(self):
-        #Here be monsters
         cat=['H','S','J','I','D','E','L','A']
         PCG=[[4, 0, 0, 0, 0],     #H
              [3, 5, 5, 1, 0],     #S

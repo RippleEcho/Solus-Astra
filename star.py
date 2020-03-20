@@ -108,6 +108,7 @@ class star:
         for i in self.p:
             if (i.h):
                 h=True
+                self.h=True
         #Does this star have at least 1 habitable planet?
         return h
 
