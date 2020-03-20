@@ -20,7 +20,7 @@ def Mass (x):
 #s.printout()
 
 hab=0
-tot=10
+tot=1
 #How many to gen
 Sca=["M","K","G","F","A","B","O"]
 ScH=[0,0,0,0,0,0,0]
@@ -36,12 +36,12 @@ for i in range (tot):
     print("Age: " + str(s.a) + " Gy")
     print("Temp " + str(s.t) +" K")
     #print("Dist(AU),Lumin(~E)")
-    if(False):
+    if(True):
         for j in s.p:
             if(j.h):
-                print(round(j.a,3),"   ",j.pt[1],round(j.hs,1), round(j.pl,2))
+                print(round(j.a,3),"   ",j.pt,round(j.hs,1), round(j.pl,2))
             else:
-                print(round(j.a,3),"   ",j.pt[1])                
+                print(round(j.a,3),"   ",j.pt)                
     hb=s.check_hab()
     hs=s.sc[0]
     hi=Sca.index(hs)

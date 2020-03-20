@@ -65,28 +65,22 @@ class star:
         self.a=round(self.a,3)
         #age in Gy
 
-    def add_planet(self,smaj):
-        #orbital eccentricity
+    def add_planet(self,smaj):        
         ecc=abs(random.gauss(0.0,0.01))
-        PC="T"
-        #'terrrestrial' type"
-        PB,GP = 0, 0.3
+        #orbital eccentricity
+
+        
+        PB = 0
         if(0.5*self.m<smaj<=self.fl):
-            PB,GP = 1, 0.2
+            PB = 1
         elif(self.fl<smaj<=self.fl+1.2):
-            PB,GP = 2, 0.3
+            PB = 2
         elif(self.fl+1.2<smaj<=self.rpo):
-            PB,GP = 3, 0.5
+            PB = 3
         elif(self.rpo<smaj):
-            PB,GP = 4, 0.5
-        #Above determines bin for G/T types based on smaj
-        #Super Hacky
-            
-        if(random.random()<GP):
-            PC="G"
-        #'Gas' type
-        PT=[PB,PC]
-        p=planet(smaj,ecc,self.l,self.m,PT)
+            PB = 4
+
+        p=planet(smaj,ecc,self.l,self.m,PB)
         self.p.append(p)
 
     def fill_planets(self):
@@ -98,7 +92,7 @@ class star:
         while (d<self.rpo):            
             if(d<self.rpo and d>self.rpi):
                 self.add_planet(d)
-            m = random.uniform(1.41,2.82)
+            m = random.uniform(1.414,2.828)
             d*=m
         #move outward by multiplying radius
             

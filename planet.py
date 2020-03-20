@@ -2,7 +2,7 @@ import random
 import math
 
 class planet:
-    def __init__(self, smaj, ecc, SL, SM, PT):
+    def __init__(self, smaj, ecc, SL, SM, PB):
         
         self.a=smaj
         #Distance from star in AU
@@ -10,7 +10,8 @@ class planet:
         self.e=ecc
         #orbital eccentricity
 
-        self.pt=PT
+        self.pb=PB
+        self.pt='N'
         self.planet_type()
         #Planetary type pair
 
@@ -37,7 +38,7 @@ class planet:
 
         self.h=False
         self.hs=0
-        if(self.pt[1]=='E'):
+        if(self.pt=='E'):
             #0.95<self.pl<=1.37 and 
             Lp=self.pl
             if(1>self.pl):
@@ -52,35 +53,26 @@ class planet:
         
     def planet_type(self):
         #Here be monsters
-        if(self.pt[1]=='G'):            #Gas
-            if(self.pt[0]==0):
-                self.pt[1]='S'          #Super Jovian
-                if(random.random()<0.5):
-                    self.pt[1]='H'      #Hot Jovian
-            elif(self.pt[0]==1):
-                self.pt[1]='S'          #Super Jovian
-            elif(self.pt[0]==2):
-                self.pt[1]='S'          #Super Jovian
-                if(random.random()<0.6):
-                    self.pt[1]='J'      #Classical Jovian
-            elif(self.pt[0]==3):
-                self.pt[1]='I'          #Ice Giant (Neptunian?)
-                if(random.random()<0.2):
-                    self.pt[1]='J'      #Classical Jovian
-            else:
-                self.pt[1]='I'          #Ice Giant 
-        if(self.pt[1]=='T'):            #Terrestrial
-            if(self.pt[0]==0 or self.pt[0]==1):
-                self.pt[1]='E'          #"Earth-like"
-                if(random.random()<0.5):
-                    self.pt[1]='D'      #Dwarf
-            else:
-                self.pt[1]='L'          #Low-density AKA mini neptune
-                if(random.random()<0.5):
-                    self.pt[1]='E'      #"Earth-like"
-                    if(random.random()<0.5):
-                        self.pt[1]='D'  #Dwarf
+        cat=['H','S','J','I','D','E','L','A']
+        PCG=[[4, 0, 0, 0, 0],     #H
+             [3, 5, 5, 1, 0],     #S
+             [1, 3, 3, 1, 0],     #J
+             [0, 0, 0, 6, 8],     #I
+             [4, 3, 3, 2, 0],     #D
+             [4, 4, 3, 3, 0],     #E
+             [0, 1, 1, 2, 0],     #A
+             [0, 0, 1, 1, 8]]     #L
+        #Type weights in arbitrary units
+        ColSum = 0
+        CatArr = []
+        for e in range(len(PCG)):
+            ColSum+=PCG[e][self.pb]
+            #sum prob weights by distance band
+            for f in range(PCG[e][self.pb]):
+                CatArr.append(cat[e])
+            #produce a str list, each type counted by weight in PCG
+        self.pt=random.choice(CatArr)
+            #pick randomly from list 
 
-            #The whole above mess is to be reworked into a table
 #TODO orbital parameters
 #TODO planet parameters
