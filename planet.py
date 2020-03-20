@@ -43,9 +43,12 @@ class planet:
             Lp=self.pl
             if(1>self.pl):
                 Lp=1.0/self.pl
+            #Normalize Planet Lum to less than 1
+            #Score against PL=1.0
             self.hs=10-(20*(Lp-1))
-            if(self.a>0.5):
+            if(self.a<0.5):
                 self.hs*=0.5
+            #Penalty for close-orbit planets due to Tidal Lock
             if(self.hs>-10):
                 self.h=True
         #Habitability Score: 10 is perfect Lower is worse
@@ -73,6 +76,7 @@ class planet:
             #produce a str list, each type counted by weight in PCG
         self.pt=random.choice(CatArr)
             #pick randomly from list 
+
 
 #TODO orbital parameters
 #TODO planet parameters

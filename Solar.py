@@ -20,7 +20,7 @@ def Mass (x):
 #s.printout()
 
 hab=0
-tot=1
+tot=10
 #How many to gen
 Sca=["M","K","G","F","A","B","O"]
 ScH=[0,0,0,0,0,0,0]
@@ -29,19 +29,19 @@ ScP=[0,0,0,0,0,0,0]
 for i in range (tot):
     print("")
     #x=random.random()
-    x=random.uniform(0.75,1.0)
-    #s=star(Mass(0.9036))
+    x=random.uniform(0.75,1.0)      #Range 0.0 to 0.7 returns only M, naturally
+    #s=star(Mass(0.9036))           #shortcut for Sol
     s=star(Mass(x))
     print("Mass " + str(round(s.m,3))+" "+s.sc)
     print("Age: " + str(s.a) + " Gy")
     print("Temp " + str(s.t) +" K")
     #print("Dist(AU),Lumin(~E)")
-    if(True):
+    if(True):  
         for j in s.p:
             if(j.h):
-                print(round(j.a,3),"   ",j.pt,round(j.hs,1), round(j.pl,2))
+                print(round(j.a,3), "AU  " , round(j.p,3),"Yr  ",j.pt,round(j.hs,1))
             else:
-                print(round(j.a,3),"   ",j.pt)                
+                print(round(j.a,3), "AU  " , round(j.p,3),"Yr  ",j.pt)
     hb=s.check_hab()
     hs=s.sc[0]
     hi=Sca.index(hs)
