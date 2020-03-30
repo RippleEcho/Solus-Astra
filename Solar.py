@@ -3,35 +3,64 @@ import math
 from star import star
 
 #Run this file to gen solar systems
+c=[0.08,  0.45,  0.80,  1.04,  1.40,  2.10,  16.0,  150]
+r=[0.0000,0.7656,0.8866,0.9626,0.9926,0.9986,0.9999,1.0000]
+m=[0,0,0,0,0,0,0]
+b=[0.08,0,0,0,0,0,0]
+for i in range (7):
+    m[i]=(c[i+1]-c[i])/(r[i+1]-r[i])
+for j in range (6):    
+    b[j+1]=r[j+1]*(m[j]-m[j+1])+b[j]
 
-def Mass (x):
+def Mass(x):
+    s=0
+    while(x>=r[s]):
+        s+=1
+    s-=1
+    ms=m[s]
+    bs=b[s]
+    u=(x*ms)+bs
+    return u #in solar masses
+
+def Mass2 (x):
     a = 2.3
     b = 1.4
     ia = (1.0/(1-a))
     ib = (1.0/(1-b))
     u=0.2
-    Gmu=0.9999
-    Gml=0.5289
+    Gmu=0.999999
+    Gml=0.528999
     m=u*(((((x*(Gmu-Gml))+Gml)**ib)-1)**ia)
     return m #in Solar mass
-
-
 
 #s.printout()
 
 hab=0
-tot=100000
+tot=100
+
 #How many to gen
 Sca=["M","K","G","F","A","B","O"]
 ScH=[0,0,0,0,0,0,0]
 ScC=[0,0,0,0,0,0,0]
 ScP=[0,0,0,0,0,0,0]
 for i in range (tot):
-
-    x=random.random()
-    #x=random.uniform(0.75,1.0)      #Range 0.0 to 0.7 returns only M, naturally
+    Sys=[]
+    #x=random.random()
+    x=random.uniform(0.75,1.0)      #Range 0.0 to 0.7 returns only M, naturally
     #s=star(Mass(0.9036))           #shortcut for Sol
     s=star(Mass(x))
+    Sys.append(s)
+    while(len(Sys)<4):
+        C=0.03*math.exp(x*3)+0.2
+        if(C>random.random()):
+            x=random.uniform(0.0,1)
+            Sys.append(star(Mass(x)))
+        else:
+            break
+    sar=[]
+    for a in Sys:
+        sar.append(a.sc)
+    print(sar)
     hb=s.check_hab()
     if(s.h and False):
         print("")
@@ -45,24 +74,24 @@ for i in range (tot):
             else:
                 print(round(j.a,3), "AU  " , round(j.p,3),"Yr  ",j.pt)
 
+
     hs=s.sc[0]
     hi=Sca.index(hs)
     if(hb):
         ScH[hi]+=1
         hab+=1
     ScC[hi]+=1
-for i in range(len(ScC)):
-    if(ScC[i]==0):
-        ScP[i]=0
-    else:
-        ScP[i]=round(float(100*ScH[i]/ScC[i]),2)
-fra=float(hab/tot)
-for u in range(len(Sca)):
-    print(Sca[u] +": "+ str(ScH[u])+'/'+str(ScC[u]) +' = '+str(ScP[u])+'%')
-#print(Sca)
-#print(ScH)
-#print(ScC)
-#print(ScP)
-#print(fra)
-
-
+if(False):
+    for i in range(len(ScC)):
+        if(ScC[i]==0):
+            ScP[i]=0
+        else:
+            ScP[i]=round(float(100*ScH[i]/ScC[i]),2)
+    fra=float(hab/tot)
+    for u in range(len(Sca)):
+        print(Sca[u] +": "+ str(ScH[u])+'/'+str(ScC[u]) +' = '+str(ScP[u])+'%')
+    #print(Sca)
+    #print(ScH)
+    #print(ScC)
+    #print(ScP)
+    #print(fra)
