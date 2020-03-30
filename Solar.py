@@ -22,19 +22,6 @@ def Mass(x):
     u=(x*ms)+bs
     return u #in solar masses
 
-def Mass2 (x):
-    a = 2.3
-    b = 1.4
-    ia = (1.0/(1-a))
-    ib = (1.0/(1-b))
-    u=0.2
-    Gmu=0.999999
-    Gml=0.528999
-    m=u*(((((x*(Gmu-Gml))+Gml)**ib)-1)**ia)
-    return m #in Solar mass
-
-#s.printout()
-
 hab=0
 tot=100
 
